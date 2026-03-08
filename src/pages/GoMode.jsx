@@ -120,7 +120,7 @@ export default function GoMode() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[var(--color-text)]">
+    <div className="flex min-h-screen flex-col bg-transparent text-[var(--color-text)]">
       {/* Live View camera feed */}
       {isLiveView && (
         <video

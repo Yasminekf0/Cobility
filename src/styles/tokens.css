@@ -8,8 +8,10 @@
   --color-primary: #4A90D9;
   --color-success: #5BB974;
   --color-warning: #F5A623;
-  --color-bg: #F8F9FA;
-  --color-text: #1A1A2E;
+  /* background variable is now just a fallback color; the actual gradient is applied to body */
+  --color-bg: #0d1117;
+  /* white text for dark theme */
+  --color-text: #ffffff;
 
   /* Typography */
   --font-body: 'Inter', sans-serif;
@@ -22,7 +24,8 @@
 body {
   margin: 0;
   padding: 0;
-  background: var(--color-bg);
+  /* dark gradient background throughout the app */
+  background: linear-gradient(to bottom, #0d1117, #1a2744);
   color: var(--color-text);
   font-family: var(--font-body);
 }

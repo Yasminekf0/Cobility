@@ -7,8 +7,7 @@ function ModeCard({ title, description, color, icon: Icon, onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full text-left rounded-2xl px-5 py-4 mb-4 flex items-center gap-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
-      style={{ backgroundColor: `${color}15` }}
+      className="w-full text-left card mb-4 flex items-center gap-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
     >
       <div
         className="flex h-12 w-12 items-center justify-center rounded-2xl"

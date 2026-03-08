@@ -8,7 +8,8 @@
 }
 
 .cobility-shell-inner {
-  @apply w-full max-w-[430px] bg-white;
+  /* transparent so gradient shows through, text defaults to white */
+  @apply w-full max-w-[430px] bg-transparent text-white;
   box-shadow: var(--shadow);
   border-radius: 0;
 }
@@ -18,5 +19,20 @@
     border-radius: var(--radius);
     margin: 1.5rem 0;
   }
+}
+
+/* global card style used throughout the app */
+.card {
+  @apply bg-[#1e2a3a] rounded-[20px] p-4 text-white;
+}
+
+/* input bar utility for full-width dark rounded inputs */
+.input-bar {
+  @apply w-full rounded-full bg-[#1e2a3a] text-white px-4 py-2;
+}
+
+/* make sure placeholder text is readable on dark inputs */
+.input-bar::placeholder {
+  color: #ccc;
 }
 

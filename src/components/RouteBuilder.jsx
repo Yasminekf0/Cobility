@@ -160,28 +160,28 @@ export default function RouteBuilder() {
     : [];
 
   return (
-    <div className="space-y-3 rounded-2xl bg-slate-50 p-3">
+    <div className="space-y-3 card">
       {/* Inputs */}
       <div className="space-y-2">
-        <label className="block text-xs font-medium text-slate-600">
+        <label className="block text-xs font-medium text-[var(--color-text)]">
           Start
           <input
             type="text"
             value={start}
             onChange={(e) => setStart(e.target.value)}
             placeholder="Home, school, or a saved place"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-[var(--color-text)] shadow-sm focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+            className="mt-1 input-bar"
           />
         </label>
 
-        <label className="block text-xs font-medium text-slate-600">
+        <label className="block text-xs font-medium text-[var(--color-text)]">
           Destination
           <input
             type="text"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
             placeholder="A place you want to go"
-            className="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 text-sm text-[var(--color-text)] shadow-sm focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+            className="mt-1 input-bar"
           />
         </label>
       </div>
@@ -212,42 +212,30 @@ export default function RouteBuilder() {
               key={route.id}
               type="button"
               onClick={() => handleSelectRoute(route.label)}
-              className={`flex w-full items-center justify-between rounded-2xl px-3 py-3 text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-                isSelected
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-white text-[var(--color-text)]'
+              className={`flex w-full items-center justify-between card text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                isSelected ? 'ring-2 ring-[var(--color-primary)]' : ''
               }`}
             >
               <div className="flex items-center gap-3">
                 <div
                   className={`flex h-10 w-10 items-center justify-center rounded-2xl ${
-                    isSelected ? 'bg-white/10' : 'bg-sky-50'
+                    isSelected ? 'bg-[var(--color-primary)]' : 'bg-sky-50'
                   }`}
                 >
                   <MapPin
                     className={`h-5 w-5 ${
-                      isSelected
-                        ? 'text-white'
-                        : 'text-[var(--color-primary)]'
+                      isSelected ? 'text-white' : 'text-[var(--color-primary)]'
                     }`}
                   />
                 </div>
                 <div>
-                  <p className="text-sm font-semibold">{route.label}</p>
-                  <p
-                    className={`text-xs ${
-                      isSelected ? 'text-sky-50' : 'text-slate-500'
-                    }`}
-                  >
+                  <p className="text-sm font-semibold text-white">{route.label}</p>
+                  <p className="text-xs text-slate-300">
                     {route.subtitle}
                   </p>
                 </div>
               </div>
-              <p
-                className={`text-sm font-semibold ${
-                  isSelected ? 'text-white' : 'text-slate-700'
-                }`}
-              >
+              <p className="text-sm font-semibold text-white">
                 {route.duration}
               </p>
             </button>

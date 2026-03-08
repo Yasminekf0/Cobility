@@ -53,7 +53,7 @@ export default function CalendarSync() {
   ];
 
   return (
-    <div className="space-y-2 rounded-2xl border border-slate-100 bg-slate-50 p-3">
+    <div className="space-y-2 card">
       <div className="flex items-center justify-between">
         <p className="text-sm font-semibold text-[var(--color-text)]">
           Sync to your calendar
@@ -88,7 +88,7 @@ export default function CalendarSync() {
             {sampleEvents.map((event) => (
               <div
                 key={event.id}
-                className="flex items-start rounded-xl bg-white px-3 py-2 text-xs shadow-sm"
+                className="flex items-start card text-xs shadow-sm"
               >
                 {/* Color bar */}
                 <div

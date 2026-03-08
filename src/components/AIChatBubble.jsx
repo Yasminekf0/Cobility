@@ -121,9 +121,9 @@ export default function AIChatBubble() {
       {/* Slide-up drawer */}
       {isOpen && (
         <div className="fixed inset-0 z-40 flex items-end justify-center bg-black/20">
-          <div className="w-full max-w-[430px] rounded-t-3xl bg-white shadow-xl">
+          <div className="w-full max-w-[430px] rounded-t-3xl card shadow-xl">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-100">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-slate-600">
               <div>
                 <p className="text-sm font-semibold text-[var(--color-text)]">
                   Planning assistant
@@ -155,7 +155,7 @@ export default function AIChatBubble() {
                     className={`max-w-[80%] rounded-2xl px-3 py-2 ${
                       msg.role === 'user'
                         ? 'bg-[var(--color-primary)] text-white'
-                        : 'bg-slate-100 text-[var(--color-text)]'
+                        : 'bg-slate-700 text-white'
                     }`}
                   >
                     {msg.content}
@@ -179,7 +179,7 @@ export default function AIChatBubble() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask about this route…"
-                className="flex-1 rounded-2xl border border-slate-200 px-3 py-2 text-sm text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30"
+                className="flex-1 input-bar"
               />
               <button
                 type="submit"

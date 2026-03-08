@@ -18,7 +18,7 @@ export default function JourneyTimeline() {
       {steps.map((step, index) => (
         <li
           key={step.id}
-          className="flex gap-3 rounded-2xl bg-white p-3 shadow-sm"
+          className="flex gap-3 card shadow-sm"
         >
           {/* Step number */}
           <div className="flex flex-col items-center pt-1">
@@ -40,7 +40,7 @@ export default function JourneyTimeline() {
                   </span>
                   <span>{step.instruction}</span>
                 </p>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-slate-300">
                   {step.duration} • {step.distance}
                 </p>
               </div>
