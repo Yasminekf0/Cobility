@@ -25,6 +25,13 @@ export default function AIChatBubble() {
     setHasNewSuggestion(false);
   };
 
+  // listen for external open events
+  useEffect(() => {
+    const handler = () => setIsOpen(true);
+    document.addEventListener('openAIChat', handler);
+    return () => document.removeEventListener('openAIChat', handler);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;

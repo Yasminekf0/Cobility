@@ -1,43 +1,34 @@
-// PlanMode: redesigned planner screen
-import { useState } from 'react';
+// JourneyView: display active journey timeline with AR button
 import { useNavigate } from 'react-router-dom';
-import { Plus, User, RotateCw, ChevronDown } from 'lucide-react';
-import AIChatBubble from '../components/AIChatBubble.jsx';
+import { ChevronDown, Compass, Plus, Sparkles } from 'lucide-react';
 import { useCobility } from '../context/CobilityContext.jsx';
 
-export default function PlanMode() {
-  const { steps } = useCobility();
+export default function JourneyView() {
   const navigate = useNavigate();
+  const { steps } = useCobility();
+
+  const handleAR = () => {
+    navigate('/go');
+  };
 
   return (
     <div className="relative flex min-h-screen flex-col bg-transparent px-4 py-6 text-white">
       {/* top input bar */}
       <div className="relative">
-        <input
-          type="text"
-          placeholder="Where do you want to go?"
-          className="w-full rounded-[50px] bg-[#1e2a3a] border border-white/10 px-4 py-[14px] text-white placeholder-gray-400"
-        />
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white">✦</span>
-      </div>
-
-      {/* avatar row */}
-      <div className="mt-6 flex items-center gap-6">
-        <div className="flex flex-col items-center">
-          <div className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-gray-600">
-            <User className="h-6 w-6 text-white" />
-          </div>
-          <span className="mt-1 text-xs">You</span>
-        </div>
         <button
           type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#1e2a3a] border border-white/15"
+          className="w-full rounded-[16px] bg-[#1e2a3a] border border-white/10 px-4 py-[14px] text-left"
+          onClick={() => {
+            // open AI chat drawer (reuse existing component trigger via event or state?)
+            document.dispatchEvent(new Event('openAIChat'));
+          }}
         >
-          <Plus className="h-6 w-6 text-white" />
+          <span className="text-white">Any Changes?</span>
+          <span className="absolute right-4 top-1/2 -translate-y-1/2">✦</span>
         </button>
       </div>
 
-      {/* transport icons */}
+      {/* transport icon row */}
       <div className="mt-6 flex items-center justify-center gap-2">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅼</div>
         <span>→</span>
@@ -50,22 +41,26 @@ export default function PlanMode() {
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🏢</div>
       </div>
 
-      {/* stops list */}
-      <ol className="mt-6 space-y-2">
+      {/* timeline list */}
+      <ol className="mt-6 space-y-3">
         {steps.map((step, idx) => (
-          <li key={step.id} className="">
-            <div className="flex items-center justify-between rounded-[16px] bg-[#1e2a3a] p-4">
+          <li key={step.id} className="relative">
+            <div className="flex items-center justify-between card p-4">
               <div>
                 <p className="text-xs text-gray-400">{step.eta}</p>
-                <p className="text-base font-bold text-white">{step.instruction}</p>
+                <p className="text-base font-bold">{step.instruction}</p>
               </div>
               <button
                 type="button"
                 className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#2a3a4a] text-white text-[11px]"
+                onClick={handleAR}
               >
-                <RotateCw className="h-3 w-3" />
-                360
+                AR
+                <Compass className="ml-1 h-3 w-3" />
               </button>
+              {idx === 0 && (
+                <span className="absolute right-0 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-[#4A9EFF]" />
+              )}
             </div>
             {idx < steps.length - 1 && (
               <div className="flex justify-center">
@@ -79,16 +74,14 @@ export default function PlanMode() {
         <li>
           <button
             type="button"
-            className="w-full rounded-[16px] border-2 border-dashed border-gray-500 py-4 text-center text-gray-400 flex items-center justify-center gap-2"
-            onClick={() => {}}
+            className="w-full rounded-[16px] border-2 border-dashed border-gray-500 py-4 text-center text-gray-400"
           >
-            <Plus className="h-5 w-5" />
-            Add stop
+            <Plus className="inline h-5 w-5" /> Add stop
           </button>
         </li>
       </ol>
 
-      {/* bottom buttons */}
+      {/* bottom row */}
       <div className="mt-auto flex items-center gap-3">
         <button
           type="button"
@@ -105,10 +98,6 @@ export default function PlanMode() {
           ✦
         </button>
       </div>
-
-      {/* AI chat bubble trigger component */}
-      <AIChatBubble />
     </div>
   );
 }
-

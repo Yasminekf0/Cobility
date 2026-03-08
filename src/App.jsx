@@ -4,6 +4,7 @@ import { CobilityProvider } from './context/CobilityContext.jsx';
 import ModeSelector from './components/ModeSelector.jsx';
 import PlanMode from './pages/PlanMode.jsx';
 import GoMode from './pages/GoMode.jsx';
+import JourneyView from './pages/JourneyView.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
               <Route path="/" element={<ModeSelector />} />
               <Route path="/plan" element={<PlanMode />} />
               <Route path="/go" element={<GoMode />} />
+              <Route path="/journey" element={<JourneyView />} />
             </Routes>
           </div>
         </div>
