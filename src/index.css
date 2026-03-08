@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Utility class for the centered mobile-first app shell */
+.cobility-shell {
+  @apply min-h-screen flex justify-center items-stretch;
+}
+
+.cobility-shell-inner {
+  @apply w-full max-w-[430px] bg-white;
+  box-shadow: var(--shadow);
+  border-radius: 0;
+}
+
+@media (min-width: 768px) {
+  .cobility-shell-inner {
+    border-radius: var(--radius);
+    margin: 1.5rem 0;
+  }
+}
+

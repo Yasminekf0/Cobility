@@ -1,10 +1,16 @@
-# Cobility
+# React + Vite
 
-We want to build an MVP for a microsoft-sponsored invisible disability hackathon that includes where can we use a multitude of tools, self hosted or not, including figma:
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-- Camera Integration with augmented reality (the goal is to use routing so the end users can follow a line to get to their destination)
-- Calendar Integration (for planning, we would like to integrate with outlook calendar and/or google calendar to pull their daily tasks / plans)
-- AI/Chat bot (maybe agentic) that should act as a sort of helper/copilot in navigating the daily tasks and creating plans that are feasible (we are targetting neuro divergent groups such as adhd, autism, etc.)
-- Time estimates based on prior commute routes
-- Some sort of energy expense measurement (lower priority)
-- Personalization support (e.g. a small kid might prefer to follow a fictiona lcharacter e.g. a lion or bear instead of a hardcoded blue line on the floor, whilst an adult or differnt end user might prefer the line alternative)
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
