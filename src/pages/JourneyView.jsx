@@ -1,102 +1,59 @@
-// JourneyView: display active journey timeline with AR button
 import { useNavigate } from 'react-router-dom';
-import { ChevronDown, Compass, Plus, Sparkles } from 'lucide-react';
-import { useCobility } from '../context/CobilityContext.jsx';
+
+const stops = [
+  { id:1, time:'11:15-11:30', date:'8.Mar 2026', location:'Centrifugevej 374', active:false },
+  { id:2, time:'11:40-12:00', date:'8.Mar 2026', location:'Nørreport St.', active:true },
+  { id:3, time:'12:00-13:00', date:'8.Mar 2026', location:'Restaurant', active:false },
+];
 
 export default function JourneyView() {
   const navigate = useNavigate();
-  const { steps } = useCobility();
-
-  const handleAR = () => {
-    navigate('/go');
+  const s = {
+    page:{minHeight:'100vh',background:'linear-gradient(180deg,#1a2744 0%,#0d1117 100%)',maxWidth:'430px',margin:'0 auto',padding:'24px 20px 100px',fontFamily:'Inter,sans-serif',color:'white',boxSizing:'border-box'},
+    searchBar:{width:'100%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'50px',padding:'14px 20px',display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'24px'},
+    iconRow:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'24px',fontSize:'24px'},
+    arrow:{color:'#8899aa',fontSize:'14px'},
+    stopCard:{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'16px',padding:'16px 20px',display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'8px',position:'relative'},
+    activeCard:{background:'#1e3a5a',border:'1px solid #4A9EFF'},
+    arBtn:{width:'48px',height:'48px',borderRadius:'50%',background:'#2a3a4a',border:'none',color:'white',fontSize:'11px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'2px'},
+    activeDot:{position:'absolute',right:'-4px',top:'50%',transform:'translateY(-50%)',width:'10px',height:'10px',borderRadius:'50%',background:'#4A9EFF'},
+    chevron:{textAlign:'center',color:'#8899aa',fontSize:'16px',margin:'4px 0'},
+    bottomBar:{position:'fixed',bottom:0,left:'50%',transform:'translateX(-50%)',width:'100%',maxWidth:'430px',background:'rgba(13,17,23,0.95)',padding:'16px 20px',display:'flex',gap:'12px',alignItems:'center',boxSizing:'border-box'},
+    input:{flex:1,background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'50px',padding:'14px 20px',color:'#667788',fontSize:'14px'},
+    sparkleBtn:{width:'52px',height:'52px',borderRadius:'50%',background:'#2a3a4a',border:'none',color:'white',fontSize:'22px',cursor:'pointer'},
   };
-
   return (
-    <div className="relative flex min-h-screen flex-col bg-transparent px-4 py-6 text-white">
-      {/* top input bar */}
-      <div className="relative">
-        <button
-          type="button"
-          className="w-full rounded-[16px] bg-[#1e2a3a] border border-white/10 px-4 py-[14px] text-left"
-          onClick={() => {
-            // open AI chat drawer (reuse existing component trigger via event or state?)
-            document.dispatchEvent(new Event('openAIChat'));
-          }}
-        >
-          <span className="text-white">Any Changes?</span>
-          <span className="absolute right-4 top-1/2 -translate-y-1/2">✦</span>
-        </button>
+    <div style={s.page}>
+      <div style={s.searchBar}>
+        <span style={{color:'#667788'}}>Any Changes?</span>
+        <span style={{fontSize:'20px'}}>✦</span>
       </div>
-
-      {/* transport icon row */}
-      <div className="mt-6 flex items-center justify-center gap-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅼</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅂</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🍴</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅼</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🏢</div>
+      <div style={s.iconRow}>
+        <span>🚇</span><span style={s.arrow}>▶</span>
+        <span>🛒</span><span style={s.arrow}>▶</span>
+        <span>🍴</span><span style={s.arrow}>▶</span>
+        <span>🚇</span><span style={s.arrow}>▶</span>
+        <span>🏛️</span>
       </div>
-
-      {/* timeline list */}
-      <ol className="mt-6 space-y-3">
-        {steps.map((step, idx) => (
-          <li key={step.id} className="relative">
-            <div className="flex items-center justify-between card p-4">
-              <div>
-                <p className="text-xs text-gray-400">{step.eta}</p>
-                <p className="text-base font-bold">{step.instruction}</p>
-              </div>
-              <button
-                type="button"
-                className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#2a3a4a] text-white text-[11px]"
-                onClick={handleAR}
-              >
-                AR
-                <Compass className="ml-1 h-3 w-3" />
-              </button>
-              {idx === 0 && (
-                <span className="absolute right-0 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-[#4A9EFF]" />
-              )}
+      {stops.map((stop, i) => (
+        <div key={stop.id}>
+          <div style={{...s.stopCard, ...(stop.active ? s.activeCard : {})}}>
+            <div>
+              <p style={{margin:'0 0 2px',fontSize:'12px',color:'#8899aa'}}>{stop.time} {stop.date}</p>
+              <p style={{margin:0,fontSize:'17px',fontWeight:'700'}}>{stop.location}</p>
             </div>
-            {idx < steps.length - 1 && (
-              <div className="flex justify-center">
-                <ChevronDown className="text-gray-400" />
-              </div>
-            )}
-          </li>
-        ))}
-
-        {/* add stop card */}
-        <li>
-          <button
-            type="button"
-            className="w-full rounded-[16px] border-2 border-dashed border-gray-500 py-4 text-center text-gray-400"
-          >
-            <Plus className="inline h-5 w-5" /> Add stop
-          </button>
-        </li>
-      </ol>
-
-      {/* bottom row */}
-      <div className="mt-auto flex items-center gap-3">
-        <button
-          type="button"
-          className="flex-1 rounded-[50px] bg-[#2a3a4a] px-4 py-4 text-center font-bold text-white"
-        >
-          Save
-          <p className="text-[11px] text-gray-400">Auto save 1 min ago</p>
-        </button>
-        <button
-          type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#2a3a4a]"
-          onClick={() => document.dispatchEvent(new Event('openAIChat'))}
-        >
-          ✦
-        </button>
+            <button onClick={() => navigate('/go')} style={s.arBtn}>
+              <span>🧭</span>
+              <span>AR</span>
+            </button>
+            {stop.active && <div style={s.activeDot}/>}
+          </div>
+          {i < stops.length-1 && <div style={s.chevron}>▼</div>}
+        </div>
+      ))}
+      <div style={s.bottomBar}>
+        <input style={s.input} placeholder="Type a message..." />
+        <button style={s.sparkleBtn}>✦</button>
       </div>
     </div>
   );

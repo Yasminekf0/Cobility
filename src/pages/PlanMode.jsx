@@ -1,114 +1,71 @@
-// PlanMode: redesigned planner screen
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, User, RotateCw, ChevronDown } from 'lucide-react';
-import AIChatBubble from '../components/AIChatBubble.jsx';
-import { useCobility } from '../context/CobilityContext.jsx';
+
+const stops = [
+  { id:1, time:'11:15-11:30', date:'8.Mar 2026', location:'Centrifugevej 374' },
+  { id:2, time:'11:40-12:00', date:'8.Mar 2026', location:'Nørreport St.' },
+];
 
 export default function PlanMode() {
-  const { steps } = useCobility();
   const navigate = useNavigate();
-
+  const s = {
+    page:{minHeight:'100vh',background:'linear-gradient(180deg,#1a2744 0%,#0d1117 100%)',maxWidth:'430px',margin:'0 auto',padding:'24px 20px 100px',fontFamily:'Inter,sans-serif',color:'white',boxSizing:'border-box'},
+    searchBar:{width:'100%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'50px',padding:'14px 20px',display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'24px',cursor:'pointer'},
+    avatarRow:{display:'flex',gap:'12px',alignItems:'flex-end',marginBottom:'20px'},
+    avatar:{width:'56px',height:'56px',borderRadius:'50%',background:'#2a3a4a',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'24px'},
+    plusCircle:{width:'56px',height:'56px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'24px',cursor:'pointer',color:'white'},
+    iconRow:{display:'flex',alignItems:'center',gap:'8px',marginBottom:'24px',fontSize:'24px'},
+    arrow:{color:'#8899aa',fontSize:'14px'},
+    stopCard:{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'16px',padding:'16px 20px',display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'8px'},
+    btn360:{width:'48px',height:'48px',borderRadius:'50%',background:'#2a3a4a',border:'none',color:'white',fontSize:'11px',cursor:'pointer',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'2px'},
+    chevron:{textAlign:'center',color:'#8899aa',fontSize:'16px',margin:'4px 0'},
+    addCard:{background:'transparent',border:'1px dashed rgba(255,255,255,0.2)',borderRadius:'16px',padding:'16px',textAlign:'center',color:'#8899aa',cursor:'pointer',marginBottom:'24px'},
+    bottomBar:{position:'fixed',bottom:0,left:'50%',transform:'translateX(-50%)',width:'100%',maxWidth:'430px',background:'rgba(13,17,23,0.95)',padding:'16px 20px',display:'flex',gap:'12px',alignItems:'center',boxSizing:'border-box'},
+    saveBtn:{flex:1,background:'#2a3a4a',border:'none',borderRadius:'50px',padding:'16px',color:'white',cursor:'pointer',textAlign:'left'},
+    sparkleBtn:{width:'52px',height:'52px',borderRadius:'50%',background:'#2a3a4a',border:'none',color:'white',fontSize:'22px',cursor:'pointer'},
+  };
   return (
-    <div className="relative flex min-h-screen flex-col bg-transparent px-4 py-6 text-white">
-      {/* top input bar */}
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Where do you want to go?"
-          className="w-full rounded-[50px] bg-[#1e2a3a] border border-white/10 px-4 py-[14px] text-white placeholder-gray-400"
-        />
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-white">✦</span>
+    <div style={s.page}>
+      <div style={s.searchBar}>
+        <span style={{color:'#667788'}}>Where do you want to go?</span>
+        <span style={{fontSize:'20px'}}>✦</span>
       </div>
-
-      {/* avatar row */}
-      <div className="mt-6 flex items-center gap-6">
-        <div className="flex flex-col items-center">
-          <div className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-gray-600">
-            <User className="h-6 w-6 text-white" />
-          </div>
-          <span className="mt-1 text-xs">You</span>
+      <div style={s.avatarRow}>
+        <div style={{textAlign:'center'}}>
+          <div style={s.avatar}>👤</div>
+          <p style={{margin:'4px 0 0',fontSize:'12px',color:'#aaa'}}>You</p>
         </div>
-        <button
-          type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#1e2a3a] border border-white/15"
-        >
-          <Plus className="h-6 w-6 text-white" />
-        </button>
+        <div style={s.plusCircle}>+</div>
       </div>
-
-      {/* transport icons */}
-      <div className="mt-6 flex items-center justify-center gap-2">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅼</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅂</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🍴</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🅼</div>
-        <span>→</span>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white">🏢</div>
+      <div style={s.iconRow}>
+        <span>🚇</span><span style={s.arrow}>▶</span>
+        <span>🛒</span><span style={s.arrow}>▶</span>
+        <span>🍴</span><span style={s.arrow}>▶</span>
+        <span>🚇</span><span style={s.arrow}>▶</span>
+        <span>🏛️</span>
       </div>
-
-      {/* stops list */}
-      <ol className="mt-6 space-y-2">
-        {steps.map((step, idx) => (
-          <li key={step.id} className="">
-            <div className="flex items-center justify-between rounded-[16px] bg-[#1e2a3a] p-4">
-              <div>
-                <p className="text-xs text-gray-400">{step.eta}</p>
-                <p className="text-base font-bold text-white">{step.instruction}</p>
-              </div>
-              <button
-                type="button"
-                className="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-[#2a3a4a] text-white text-[11px]"
-              >
-                <RotateCw className="h-3 w-3" />
-                360
-              </button>
+      {stops.map((stop, i) => (
+        <div key={stop.id}>
+          <div style={s.stopCard}>
+            <div>
+              <p style={{margin:'0 0 2px',fontSize:'12px',color:'#8899aa'}}>{stop.time} {stop.date}</p>
+              <p style={{margin:0,fontSize:'17px',fontWeight:'700'}}>{stop.location}</p>
             </div>
-            {idx < steps.length - 1 && (
-              <div className="flex justify-center">
-                <ChevronDown className="text-gray-400" />
-              </div>
-            )}
-          </li>
-        ))}
-
-        {/* add stop card */}
-        <li>
-          <button
-            type="button"
-            className="w-full rounded-[16px] border-2 border-dashed border-gray-500 py-4 text-center text-gray-400 flex items-center justify-center gap-2"
-            onClick={() => {}}
-          >
-            <Plus className="h-5 w-5" />
-            Add stop
-          </button>
-        </li>
-      </ol>
-
-      {/* bottom buttons */}
-      <div className="mt-auto flex items-center gap-3">
-        <button
-          type="button"
-          className="flex-1 rounded-[50px] bg-[#2a3a4a] px-4 py-4 text-center font-bold text-white"
-        >
-          Save
-          <p className="text-[11px] text-gray-400">Auto save 1 min ago</p>
+            <button style={s.btn360}>
+              <span>↻</span>
+              <span>360</span>
+            </button>
+          </div>
+          {i < stops.length-1 && <div style={s.chevron}>▼</div>}
+        </div>
+      ))}
+      <div style={s.addCard}>+ Add stop</div>
+      <div style={s.bottomBar}>
+        <button style={s.saveBtn}>
+          <div style={{fontWeight:'700',fontSize:'16px'}}>Save</div>
+          <div style={{fontSize:'11px',color:'#8899aa',marginTop:'2px'}}>Auto save in 1 min ago</div>
         </button>
-        <button
-          type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#2a3a4a]"
-          onClick={() => document.dispatchEvent(new Event('openAIChat'))}
-        >
-          ✦
-        </button>
+        <button style={s.sparkleBtn}>✦</button>
       </div>
-
-      {/* AI chat bubble trigger component */}
-      <AIChatBubble />
     </div>
   );
 }
-
