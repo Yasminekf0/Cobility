@@ -11,17 +11,22 @@ export default function ModeSelector() {
         <button style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'12px',padding:'8px 10px',cursor:'pointer',color:'white',fontSize:'16px'}}>☀️</button>
       </div>
 
-      <p style={{margin:'0 0 4px',fontSize:'18px',color:'#aabbcc'}}>Hi,</p>
+      <p style={{margin:'0 0 4px',fontSize:'18px',color:'#aabbcc'}}>Hi Emma,</p>
       <h1 style={{margin:'0 0 32px',fontSize:'38px',fontWeight:'800',lineHeight:'1.1'}}>How can I help u</h1>
 
-      <div onClick={() => navigate('/plan')} style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'16px',padding:'20px',marginBottom:'20px',cursor:'pointer',position:'relative',minHeight:'90px'}}>
+      <div style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'16px',padding:'20px',marginBottom:'20px',position:'relative',minHeight:'90px'}}>
         <p style={{margin:0,color:'#667788',fontSize:'16px'}}>2 hour trip to Nyhavn...</p>
         <span style={{position:'absolute',bottom:'14px',right:'18px',fontSize:'22px'}}>✦</span>
       </div>
 
       <div style={{display:'flex',gap:'12px',marginBottom:'48px'}}>
-        <button style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'24px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>+</button>
-        <button style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'16px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>✏️</button>
+        <button 
+          style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'24px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}
+        >+</button>
+        <button 
+          onClick={() => navigate('/plan')}
+          style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'16px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}
+        >✏️</button>
       </div>
 
       <p style={{margin:'0 0 12px',fontSize:'14px',fontWeight:'600'}}>Next Trip ---</p>
