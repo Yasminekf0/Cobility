@@ -1,80 +1,38 @@
-// ModeSelector: redesigned home screen per Figma
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Plus, Edit2 } from 'lucide-react';
 
 export default function ModeSelector() {
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(true);
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-transparent px-4 py-6 text-white">
-      {/* top controls */}
-      <button
-        type="button"
-        onClick={() => setDarkMode((d) => !d)}
-        className="absolute top-4 right-4 p-2 rounded-full bg-[#1e2a3a]/80"
-        aria-label="Toggle dark mode"
-      >
-        <Sun className="h-6 w-6 text-white" />
-      </button>
-      <div className="absolute top-4 left-4 text-sm text-gray-400">cobility</div>
-
-      {/* greeting */}
-      <div className="mt-16">
-        <p className="text-[18px]">Hi,</p>
-        <p className="mt-1 text-[36px] font-extrabold">How can I help u</p>
+    <div style={{minHeight:'100vh',background:'linear-gradient(180deg,#1a2744 0%,#0d1117 100%)',maxWidth:'430px',margin:'0 auto',padding:'48px 24px 32px',fontFamily:'Inter,sans-serif',color:'white',boxSizing:'border-box'}}>
+      
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'48px'}}>
+        <span style={{color:'#8899aa',fontSize:'14px',fontWeight:'600'}}>cobility</span>
+        <button style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'12px',padding:'8px 10px',cursor:'pointer',color:'white',fontSize:'16px'}}>☀️</button>
       </div>
 
-      {/* input card */}
-      <button
-        type="button"
-        onClick={() => navigate('/plan')}
-        className="relative mt-8 w-full rounded-[16px] bg-[#1e2a3a] border border-white/10 px-4 py-[20px] text-left"
-      >
-        <input
-          type="text"
-          placeholder="2 hour trip to Nyhavn..."
-          className="w-full bg-transparent border-none placeholder-gray-400 text-white text-[16px] focus:outline-none"
-          readOnly
-        />
-        <span className="absolute bottom-2 right-2 text-white">✦</span>
-      </button>
+      <p style={{margin:'0 0 4px',fontSize:'18px',color:'#aabbcc'}}>Hi,</p>
+      <h1 style={{margin:'0 0 32px',fontSize:'38px',fontWeight:'800',lineHeight:'1.1'}}>How can I help u</h1>
 
-      {/* icon buttons */}
-      <div className="mt-4 flex justify-center gap-4">
-        <button
-          type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#1e2a3a] border border-white/15"
-        >
-          <Plus className="h-6 w-6 text-white" />
-        </button>
-        <button
-          type="button"
-          className="flex h-[52px] w-[52px] items-center justify-center rounded-full bg-[#1e2a3a] border border-white/15"
-        >
-          <Edit2 className="h-6 w-6 text-white" />
-        </button>
+      <div onClick={() => navigate('/plan')} style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'16px',padding:'20px',marginBottom:'20px',cursor:'pointer',position:'relative',minHeight:'90px'}}>
+        <p style={{margin:0,color:'#667788',fontSize:'16px'}}>2 hour trip to Nyhavn...</p>
+        <span style={{position:'absolute',bottom:'14px',right:'18px',fontSize:'22px'}}>✦</span>
       </div>
 
-      {/* next trip header */}
-      <p className="mt-8 text-[14px] font-semibold">Next Trip ---</p>
+      <div style={{display:'flex',gap:'12px',marginBottom:'48px'}}>
+        <button style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'24px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>+</button>
+        <button style={{width:'52px',height:'52px',borderRadius:'50%',background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.15)',color:'white',fontSize:'16px',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center'}}>✏️</button>
+      </div>
 
-      {/* pill card */}
-      <button
-        type="button"
-        onClick={() => navigate('/journey')}
-        className="mt-2 flex w-full items-center justify-between rounded-[50px] bg-[#1e2a3a] px-[20px] py-[14px]"
-      >
-        <div className="flex flex-col">
-          <span className="text-xs text-gray-400">11:15-11:30  8.Mar 2026</span>
-          <span className="text-sm font-bold">Centrifugevej 374</span>
+      <p style={{margin:'0 0 12px',fontSize:'14px',fontWeight:'600'}}>Next Trip ---</p>
+      <div onClick={() => navigate('/journey')} style={{background:'#1e2a3a',border:'1px solid rgba(255,255,255,0.1)',borderRadius:'50px',padding:'14px 20px',display:'flex',justifyContent:'space-between',alignItems:'center',cursor:'pointer'}}>
+        <div>
+          <p style={{margin:'0 0 2px',fontSize:'12px',color:'#8899aa'}}>11:15-11:30  8.Mar 2026</p>
+          <p style={{margin:0,fontSize:'16px',fontWeight:'700'}}>Centrifugevej 374</p>
         </div>
-        <span className="rounded-[50px] bg-[#2a3a4a] px-[16px] py-[8px] text-xs font-bold">
-          6:30
-        </span>
-      </button>
+        <span style={{background:'#2a3a4a',borderRadius:'50px',padding:'8px 16px',fontWeight:'700',fontSize:'16px'}}>6:30</span>
+      </div>
+
     </div>
   );
 }
-
