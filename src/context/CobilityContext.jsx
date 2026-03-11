@@ -84,6 +84,12 @@ export function CobilityProvider({ children }) {
   const [steps, setSteps] = useState(MOCK_STEPS);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
+  // Grayscale mode for colorblind users
+  const [isGrayscale, setIsGrayscale] = useState(false);
+
+  // Sensory preferences (visual-only or audio-only)
+  const [sensoryMode, setSensoryMode] = useState('full');
+
   const resetNavigation = () => setCurrentStepIndex(0);
 
   const setStepsFromDirections = (nextSteps) => {
@@ -100,6 +106,10 @@ export function CobilityProvider({ children }) {
     setCurrentStepIndex,
     setStepsFromDirections,
     resetNavigation,
+    isGrayscale,
+    setIsGrayscale,
+    sensoryMode,
+    setSensoryMode,
   };
 
   return (
