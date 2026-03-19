@@ -1,8 +1,10 @@
 # Cobility
 
-**Navigation and daily planning for neurodivergent users.**
+**Step-by-step navigation for neurodivergent users.**
 
-Cobility is a mobile-first web app that helps people with ADHD, autism, and other invisible disabilities move through their day with less friction. It combines AR-guided navigation, calendar planning, and an AI copilot into one calm, personalized experience.
+Cobility is a mobile-first web app that helps people with ADHD, autism, and other invisible disabilities navigate their day with less friction. Instead of overwhelming the user with a map, it breaks every journey into calm, one-step-at-a-time instructions — planned ahead, executed simply.
+
+Live at **[cobility.vercel.app](https://cobility.vercel.app)**
 
 Built in 12 hours for a Microsoft-sponsored invisible disability hackathon.
 
@@ -10,21 +12,21 @@ Built in 12 hours for a Microsoft-sponsored invisible disability hackathon.
 
 ## The Problem
 
-1 in 7 people are neurodivergent. For many of them, navigating a new building, managing a packed schedule, or recovering from sensory overwhelm isn't just inconvenient — it's exhausting in ways that are invisible to everyone around them. Existing tools are built for neurotypical users and offer no accommodation for executive function, sensory load, or energy management.
+Navigation apps like Google Maps are built for neurotypical users. They show everything at once — the full route, all the decisions, all the complexity — and expect you to process it in real time. For someone with ADHD or autism, that cognitive load is the barrier, not the distance.
+
+Cobility removes the noise. Plan once, then go one step at a time.
 
 ---
 
-## What It Does
+## How It Works
 
-**AR Navigation** — Point your camera and follow a guided path to your destination. Choose between a classic blue line or a character companion (Leo 🦁, Benny 🐻, Finn 🦊) depending on what works for you.
+The app has two modes, chosen from the home screen.
 
-**Daily Planner** — Syncs with your Outlook or Google Calendar and shows your day as a prioritized task list, each task tagged with an estimated energy cost so you can pace yourself.
+### Plan Mode
+Build your journey before you leave. Add a destination, add stops along the way, and see your full route as a timeline. Each stop shows a Google Street View preview so you know exactly what to look for when you arrive. Syncs with your calendar to surface upcoming trips automatically.
 
-**AI Copilot** — A conversational assistant that knows your schedule and adapts to how you're feeling. Tell it you're overwhelmed and it'll simplify your afternoon. Ask what's next and it'll offer to navigate you there.
-
-**Time Estimates** — Learns your personal commute times over multiple sessions and shows you realistic estimates based on your own history, not a generic average.
-
-**Personalization** — Every visual, color, and interaction adapts to your chosen companion and accessibility preferences. Reduce motion, high contrast, break reminders — all configurable.
+### Go Mode
+Once you're ready to leave, Go Mode takes over. The screen shows only what matters right now: a live map, a directional arrow that rotates with your real GPS heading, and one instruction in large text. A progress bar and estimated arrival time keep you grounded. Tap "Next step" to advance through your route.
 
 ---
 
@@ -32,14 +34,15 @@ Built in 12 hours for a Microsoft-sponsored invisible disability hackathon.
 
 | Layer | Tool | Cost |
 |---|---|---|
-| Frontend | React + Vite + TypeScript | Free |
+| Frontend | React + Vite | Free |
 | Styling | Tailwind CSS | Free |
-| AI Copilot | Groq API (llama3-70b) | Free |
-| Calendar | Microsoft Graph API | Free |
-| AR / Camera | Browser `getUserMedia()` + Canvas | Free |
 | Routing | React Router | Free |
+| Maps | Google Maps Embed API | Free tier |
+| Geolocation | Browser Geolocation API | Free |
+| Calendar | Microsoft Graph API (Outlook) | Free |
+| AI Assistant | Groq API (llama3-70b) | Free |
 | Hosting | Vercel | Free |
-| Design System | Figma | Free |
+| Design | Figma | Free |
 
 **Total infrastructure cost: €0**
 
@@ -57,13 +60,15 @@ npm run dev
 Create a `.env` file in the root:
 
 ```
+VITE_GOOGLE_MAPS_KEY=your_google_maps_key
 VITE_GROQ_API_KEY=your_groq_key
 VITE_AZURE_CLIENT_ID=your_azure_client_id
 VITE_AZURE_TENANT_ID=your_azure_tenant_id
 ```
 
-Get your free Groq API key at [console.groq.com](https://console.groq.com).  
-Register an Azure app (free) at [portal.azure.com](https://portal.azure.com) — you need `Calendars.Read` and `User.Read` permissions under Microsoft Graph.
+- Google Maps key: [console.cloud.google.com](https://console.cloud.google.com) — enable Maps Embed API (free tier)
+- Groq key: [console.groq.com](https://console.groq.com) — free, no credit card
+- Azure keys: [portal.azure.com](https://portal.azure.com) — register an app, add `Calendars.Read` + `User.Read` under Microsoft Graph
 
 ---
 
@@ -71,34 +76,34 @@ Register an Azure app (free) at [portal.azure.com](https://portal.azure.com) —
 
 ```
 src/
+├── pages/
+│   ├── PlanMode.jsx          # Journey builder with timeline + street view
+│   └── GoMode.jsx            # Real-time step-by-step navigation
 ├── components/
-│   ├── TaskCard.tsx        # Daily task with energy dots + location
-│   ├── CompanionCard.tsx   # Companion selector (Leo, Benny, Finn, Line)
-│   ├── BottomTabBar.tsx    # Tab navigation
-│   └── ARView.tsx          # Camera + canvas AR overlay
-├── context/
-│   └── CompanionContext.tsx # Global companion + theme state
-├── api/
-│   ├── chat.ts             # Groq API integration
-│   └── calendar.ts         # MS Graph calendar fetch
-├── utils/
-│   └── energy.ts           # Local energy scoring model
-└── styles/
-    └── theme.css           # Design tokens
+│   ├── ModeSelector.jsx      # Home screen — Plan vs Go
+│   ├── RouteBuilder.jsx      # Destination + stop input
+│   ├── JourneyTimeline.jsx   # Visual step sequence
+│   ├── LockedRouteCard.jsx   # Saved route summary
+│   ├── CalendarSync.jsx      # Outlook calendar integration
+│   ├── AIChatBubble.jsx      # Floating AI assistant
+│   └── Navbar.jsx            # Top navigation bar
+└── context/
+    └── CobilityContext.jsx   # Global state: route, steps, current step
 ```
 
 ---
 
-## Features Roadmap
+## Features
 
-- [x] Companion personalization system
-- [x] Energy cost per task
-- [x] AR camera overlay with guided navigation
-- [x] AI copilot with contextual responses
-- [ ] MS Graph calendar sync
-- [ ] Route time learning (localStorage history)
-- [ ] Google Calendar support
+- [x] Two-mode UX: Plan ahead, then go
+- [x] Journey timeline with Google Street View previews per stop
+- [x] Real-time GPS tracking with rotating direction arrow
+- [x] Step-by-step instructions in large, calm typography
+- [x] Progress bar with estimated arrival time
+- [x] Calendar sync — surfaces next trip on home screen
+- [x] Floating AI chat assistant in Plan Mode
 - [ ] Offline mode
+- [ ] Time estimates based on personal route history
 - [ ] Native app (React Native / Expo)
 
 ---
@@ -106,7 +111,7 @@ src/
 ## Team
 
 - **Yasminek0** — Dev + AI integration
-- **TheOfficialPetereo** — Dev + calendar integration
+- **TheOfficialPetereo** — Dev + maps + calendar integration
 
 ---
 
